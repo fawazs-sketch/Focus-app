@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Focus</title>
+<style>
+:root{--bg:#f5f5f7;--panel:rgba(255,255,255,.75);--text:#111114;--muted:#8a8a92;--line:rgba(0,0,0,.08);--accent:#ff5b55}
+:root.dark{--bg:#0d0d0f;--panel:rgba(28,28,31,.82);--text:#f5f5f7;--muted:#92929a;--line:rgba(255,255,255,.09)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif}body{min-height:100svh}.app{max-width:720px;min-height:100svh;margin:auto;padding:env(safe-area-inset-top) 18px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.top{height:62px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:22px;font-weight:750;letter-spacing:-.5px}.icons{display:flex;gap:8px}.icon,.round{border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer}.icon{width:40px;height:40px;border-radius:50%;font-size:16px}.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}.phase{font-size:12px;letter-spacing:1.5px;font-weight:700;color:var(--muted)}.clock{font-size:clamp(96px,25vw,175px);font-weight:500;letter-spacing:-7px;line-height:.95;font-variant-numeric:tabular-nums;margin:16px 0 25px}.progress{width:min(340px,78vw);height:6px;background:var(--line);border-radius:9px;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent);transform-origin:left}.mainbtn{border:0;background:var(--text);color:var(--bg);font-size:16px;font-weight:650;border-radius:999px;padding:16px 48px;margin-top:28px;box-shadow:0 15px 45px rgba(0,0,0,.1)}.sub{display:flex;gap:10px;margin-top:12px}.round{width:44px;height:44px;border-radius:50%}.cards{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:16px;backdrop-filter:blur(25px)}.cardtitle{font-size:12px;font-weight:700;margin-bottom:11px}.song{display:flex;align-items:center;gap:10px}.art{width:43px;height:43px;border-radius:12px;background:linear-gradient(135deg,#111,#777);display:grid;place-items:center;color:#fff}.songtext{min-width:0;flex:1}.songtext b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.songtext span{font-size:10px;color:var(--muted)}.play{border:0;border-radius:50%;width:36px;height:36px;background:var(--text);color:var(--bg)}.smallbtn{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:10px;padding:7px 9px;font-size:11px;margin-top:10px}.stat{font-size:30px;font-weight:700}.muted{font-size:11px;color:var(--muted)}.bottom{text-align:center;padding-top:12px}.bottom button{background:none;border:0;color:var(--muted);font-size:11px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.38);display:none;align-items:flex-end;z-index:5}.sheet{width:100%;max-width:720px;margin:auto;background:var(--bg);border-radius:27px 27px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:85svh;overflow:auto}.modal.open{display:flex}.sheet h2{margin:0 0 18px;font-size:22px}.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}.row input{width:65px;padding:7px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--text);text-align:center}.close{width:100%;padding:13px;border:0;border-radius:13px;background:var(--text);color:var(--bg);margin-top:18px;font-weight:650}.track{display:flex;gap:9px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}.track button{margin-left:auto;border:0;background:none;color:var(--text)}.install{display:none;background:var(--text);color:var(--bg);border:0;border-radius:999px;padding:11px 15px;font-weight:600;font-size:12px}.widget{display:none}.widgetMode .app{display:none}.widgetMode .widget{display:block;padding:14px}.wcard{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:16px;aspect-ratio:1.5;display:flex;flex-direction:column;justify-content:space-between}.wtop{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.wtime{font-size:42px;font-variant-numeric:tabular-nums;letter-spacing:-2px}.wbar{height:4px;background:var(--line);border-radius:9px;overflow:hidden}.wbar i{display:block;height:100%;background:var(--accent)}
+@media(max-width:520px){.cards{grid-template-columns:1fr}.clock{letter-spacing:-5px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand">Focus</div><div class="icons"><button class="install" id="install">Install</button><button class="icon" id="theme">☾</button><button class="icon" id="settings">⚙︎</button></div></header>
+<main class="hero">
+<div class="phase" id="phase">FOCUS · SESSION 1</div>
+<div class="clock" id="clock">25:00</div>
+<div class="progress"><i id="bar"></i></div>
+<button class="mainbtn" id="start">Start</button>
+<div class="sub"><button class="round" id="reset">↺</button><button class="round" id="skip">››</button></div>
+</main>
+<section class="cards">
+<div class="card"><div class="cardtitle">MUSIC</div><div class="song"><div class="art">♫</div><div class="songtext"><b id="song">No music selected</b><span id="state">Add songs from your iPhone</span></div><button class="play" id="play">▶</button></div><button class="smallbtn" id="library">Music library</button><input id="files" type="file" accept="audio/*" multiple hidden></div>
+<div class="card"><div class="cardtitle">TODAY</div><div class="stat" id="done">0</div><div class="muted">focus sessions</div></div>
+</section>
+<div class="bottom"><button id="widget">Widget view</button></div>
+</div>
+<div class="widget"><div class="wcard"><div class="wtop"><b>Focus</b><span id="wphase">Focus</span></div><div class="wtime" id="wclock">25:00</div><div class="wbar"><i id="wbar"></i></div></div></div>
+
+<div class="modal" id="settingsModal"><div class="sheet"><h2>Settings</h2>
+<div class="row">Focus minutes <input id="focus" type="number" min="1" max="120" value="25"></div>
+<div class="row">Short break <input id="short" type="number" min="1" max="60" value="5"></div>
+<div class="row">Long break <input id="long" type="number" min="1" max="90" value="15"></div>
+<div class="row">Sessions before long break <input id="rounds" type="number" min="1" max="12" value="4"></div>
+<div class="row">Auto-start breaks <input id="autoBreak" type="checkbox" checked></div>
+<div class="row">Completion sound <input id="sound" type="checkbox" checked></div>
+<button class="close" data-close="settingsModal">Done</button></div></div>
+
+<div class="modal" id="libraryModal"><div class="sheet"><h2>Music library</h2><label class="smallbtn">＋ Add music<input id="files2" type="file" accept="audio/*" multiple hidden></label><div id="tracks"></div><button class="close" data-close="libraryModal">Done</button></div></div>
+
+<audio id="audio"></audio>
+<script>
+const $=id=>document.getElementById(id);
+let cfg=JSON.parse(localStorage.getItem("focusCfg")||'{"focus":25,"short":5,"long":15,"rounds":4,"autoBreak":true,"sound":true}');
+let phase="Focus",cycle=1,left=cfg.focus*60,running=false,completed=+localStorage.getItem("completed")||0,timer=null,songs=[],current=-1,deferred=null;
+function total(){return (phase==="Focus"?cfg.focus:phase==="Short Break"?cfg.short:cfg.long)*60}
+function fmt(x){return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0")}
+function render(){let pct=Math.max(0,Math.min(100,(1-left/total())*100)),t=fmt(left);$("clock").textContent=t;$("bar").style.width=pct+"%";$("phase").textContent=phase.toUpperCase()+" · SESSION "+cycle;$("start").textContent=running?"Pause":"Start";$("done").textContent=completed;$("wclock").textContent=t;$("wbar").style.width=pct+"%";$("wphase").textContent=phase}
+function save(){localStorage.setItem("focusCfg",JSON.stringify(cfg));localStorage.setItem("completed",completed)}
+function tick(){if(left>0){left--;render()}else finish()}
+function finish(){running=false;clearInterval(timer);if(phase==="Focus"){completed++;phase=cycle>=cfg.rounds?"Long Break":"Short Break"}else{if(phase==="Long Break")cycle=1;else cycle++;phase="Focus"}left=total();save();beep();notify();if(phase!=="Focus"&&cfg.autoBreak) start();render()}
+function start(){running=true;clearInterval(timer);timer=setInterval(tick,1000);render()}
+$("start").onclick=()=>{running?(()=>{running=false;clearInterval(timer);render()})():start()};
+$("reset").onclick=()=>{running=false;clearInterval(timer);left=total();render()};
+$("skip").onclick=()=>{left=0;finish()};
+$("theme").onclick=()=>{document.documentElement.classList.toggle("dark");localStorage.setItem("dark",document.documentElement.classList.contains("dark"))};
+if(localStorage.getItem("dark")==="true")document.documentElement.classList.add("dark");
+$("settings").onclick=()=>{["focus","short","long"].forEach(k=>$(k).value=cfg[k]);$("rounds").value=cfg.rounds;$("autoBreak").checked=cfg.autoBreak;$("sound").checked=cfg.sound;$("settingsModal").classList.add("open")};
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>{let id=b.dataset.close;if(id==="settingsModal"){cfg.focus=+$("focus").value||25;cfg.short=+$("short").value||5;cfg.long=+$("long").value||15;cfg.rounds=+$("rounds").value||4;cfg.autoBreak=$("autoBreak").checked;cfg.sound=$("sound").checked;left=total();save();render()}$(id).classList.remove("open")});
+function addFiles(list){[...list].forEach(f=>songs.push({name:f.name,url:URL.createObjectURL(f)}));if(current<0&&songs.length)selectSong(0);renderTracks()}
+$("files").onchange=e=>addFiles(e.target.files);$("files2").onchange=e=>addFiles(e.target.files);
+$("library").onclick=()=>{renderTracks();$("libraryModal").classList.add("open")};
+function renderTracks(){let el=$("tracks");el.innerHTML=songs.length?"":"<p class='muted'>Your music library is empty.</p>";songs.forEach((s,i)=>{let d=document.createElement("div");d.className="track";d.innerHTML="<span>♫</span><span>"+s.name.replace(/[&<>]/g,"")+"</span><button>Play</button>";d.querySelector("button").onclick=()=>{selectSong(i);$("libraryModal").classList.remove("open");audio.play().catch(()=>{})};el.appendChild(d)})}
+function selectSong(i){current=i;$("audio").src=songs[i].url;$("song").textContent=songs[i].name;$("state").textContent="Ready to play"}
+const audio=$("audio");$("play").onclick=()=>{if(current<0){$("files").click();return}audio.paused?(audio.play(),$("play").textContent="Ⅱ",$("state").textContent="Playing"):(audio.pause(),$("play").textContent="▶",$("state").textContent="Paused")};audio.onended=()=>{if(songs.length){selectSong((current+1)%songs.length);audio.play().catch(()=>{})}};
+$("widget").onclick=()=>{document.body.classList.toggle("widgetMode");$("widget").textContent=document.body.classList.contains("widgetMode")?"Full screen":"Widget view"};
+function beep(){if(!cfg.sound)return;try{let c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.frequency.value=660;g.gain.setValueAtTime(.001,c.currentTime);g.gain.exponentialRampToValueAtTime(.12,c.currentTime+.03);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.45);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.5)}catch(e){}}
+function notify(){if("Notification"in window&&Notification.permission==="granted")new Notification("Focus", {body:phase==="Focus"?"Break finished. Ready to focus?":"Focus finished. Take a break."})}
+if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
+let installEvent;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installEvent=e;$("install").style.display="block"});$("install").onclick=async()=>{if(installEvent){installEvent.prompt();installEvent=null}};
+render();
+</script>
+</body>
+</html>
