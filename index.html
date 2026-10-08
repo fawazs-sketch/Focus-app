@@ -3,79 +3,394 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#f5f5f7">
+<meta name="theme-color" content="#0b0b0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Focus">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Focus</title>
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Focus — Deep Work Timer</title>
 <style>
-:root{--bg:#f5f5f7;--panel:rgba(255,255,255,.75);--text:#111114;--muted:#8a8a92;--line:rgba(0,0,0,.08);--accent:#ff5b55}
-:root.dark{--bg:#0d0d0f;--panel:rgba(28,28,31,.82);--text:#f5f5f7;--muted:#92929a;--line:rgba(255,255,255,.09)}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif}body{min-height:100svh}.app{max-width:720px;min-height:100svh;margin:auto;padding:env(safe-area-inset-top) 18px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.top{height:62px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:22px;font-weight:750;letter-spacing:-.5px}.icons{display:flex;gap:8px}.icon,.round{border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer}.icon{width:40px;height:40px;border-radius:50%;font-size:16px}.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}.phase{font-size:12px;letter-spacing:1.5px;font-weight:700;color:var(--muted)}.clock{font-size:clamp(96px,25vw,175px);font-weight:500;letter-spacing:-7px;line-height:.95;font-variant-numeric:tabular-nums;margin:16px 0 25px}.progress{width:min(340px,78vw);height:6px;background:var(--line);border-radius:9px;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent);transform-origin:left}.mainbtn{border:0;background:var(--text);color:var(--bg);font-size:16px;font-weight:650;border-radius:999px;padding:16px 48px;margin-top:28px;box-shadow:0 15px 45px rgba(0,0,0,.1)}.sub{display:flex;gap:10px;margin-top:12px}.round{width:44px;height:44px;border-radius:50%}.cards{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:16px;backdrop-filter:blur(25px)}.cardtitle{font-size:12px;font-weight:700;margin-bottom:11px}.song{display:flex;align-items:center;gap:10px}.art{width:43px;height:43px;border-radius:12px;background:linear-gradient(135deg,#111,#777);display:grid;place-items:center;color:#fff}.songtext{min-width:0;flex:1}.songtext b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.songtext span{font-size:10px;color:var(--muted)}.play{border:0;border-radius:50%;width:36px;height:36px;background:var(--text);color:var(--bg)}.smallbtn{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:10px;padding:7px 9px;font-size:11px;margin-top:10px}.stat{font-size:30px;font-weight:700}.muted{font-size:11px;color:var(--muted)}.bottom{text-align:center;padding-top:12px}.bottom button{background:none;border:0;color:var(--muted);font-size:11px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.38);display:none;align-items:flex-end;z-index:5}.sheet{width:100%;max-width:720px;margin:auto;background:var(--bg);border-radius:27px 27px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:85svh;overflow:auto}.modal.open{display:flex}.sheet h2{margin:0 0 18px;font-size:22px}.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}.row input{width:65px;padding:7px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--text);text-align:center}.close{width:100%;padding:13px;border:0;border-radius:13px;background:var(--text);color:var(--bg);margin-top:18px;font-weight:650}.track{display:flex;gap:9px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}.track button{margin-left:auto;border:0;background:none;color:var(--text)}.install{display:none;background:var(--text);color:var(--bg);border:0;border-radius:999px;padding:11px 15px;font-weight:600;font-size:12px}.widget{display:none}.widgetMode .app{display:none}.widgetMode .widget{display:block;padding:14px}.wcard{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:16px;aspect-ratio:1.5;display:flex;flex-direction:column;justify-content:space-between}.wtop{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.wtime{font-size:42px;font-variant-numeric:tabular-nums;letter-spacing:-2px}.wbar{height:4px;background:var(--line);border-radius:9px;overflow:hidden}.wbar i{display:block;height:100%;background:var(--accent)}
-@media(max-width:520px){.cards{grid-template-columns:1fr}.clock{letter-spacing:-5px}}
+:root{
+  --bg:#f5f5f7;--card:rgba(255,255,255,.72);--text:#111114;--muted:#74747b;
+  --line:rgba(0,0,0,.08);--accent:#ff4d5a;--accent2:#ff7a83;--shadow:0 20px 60px rgba(0,0,0,.10);
+  --nav:rgba(250,250,252,.82);--ring:rgba(17,17,20,.10)
+}
+[data-theme="dark"]{
+  --bg:#09090b;--card:rgba(25,25,29,.76);--text:#f7f7f8;--muted:#98989f;
+  --line:rgba(255,255,255,.10);--shadow:0 24px 80px rgba(0,0,0,.45);--nav:rgba(14,14,17,.84);--ring:rgba(255,255,255,.10)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+body{padding-bottom:calc(86px + env(safe-area-inset-bottom));overflow-x:hidden}
+button,input{font:inherit}
+button{border:0;color:inherit;background:none;cursor:pointer}
+.app{max-width:720px;margin:auto;padding:calc(14px + env(safe-area-inset-top)) 18px 24px}
+.topbar{display:flex;align-items:center;justify-content:space-between;height:52px;margin-bottom:8px}
+.brand{font-size:19px;font-weight:800;letter-spacing:-.04em}.brand span{color:var(--accent)}
+.iconbtn{width:42px;height:42px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(18px);border-radius:15px;display:grid;place-items:center;box-shadow:0 8px 25px rgba(0,0,0,.05)}
+.iconbtn:active,.pill:active,.primary:active,.secondary:active{transform:scale(.97)}
+.view{display:none;animation:rise .35s ease}.view.active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{text-align:center;padding:10px 0 8px}
+.mode{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--card);padding:8px 13px;border-radius:999px;font-size:13px;font-weight:750;backdrop-filter:blur(18px)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}
+.timerWrap{position:relative;width:min(82vw,360px);aspect-ratio:1;margin:22px auto 14px;display:grid;place-items:center}
+.ring{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring .track{fill:none;stroke:var(--ring);stroke-width:10}
+.ring .progress{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.timerText{position:relative;font-size:clamp(62px,18vw,94px);font-weight:750;letter-spacing:-.075em;line-height:1}
+.timerSub{position:relative;margin-top:10px;color:var(--muted);font-size:14px}
+.taskTitle{font-size:20px;font-weight:750;letter-spacing:-.035em;margin:4px 0 4px;min-height:28px}
+.taskHint{font-size:13px;color:var(--muted);min-height:20px}
+.controls{display:flex;justify-content:center;gap:12px;margin:22px 0 20px}
+.primary{height:58px;min-width:160px;padding:0 27px;border-radius:19px;background:var(--text);color:var(--bg);font-weight:800;box-shadow:var(--shadow);transition:.2s}
+.secondary{height:58px;width:58px;border-radius:19px;background:var(--card);border:1px solid var(--line);backdrop-filter:blur(18px);transition:.2s}
+.presets{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.pill{border:1px solid var(--line);background:var(--card);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:16px 14px;border:1px solid var(--line);background:var(--card);border-radius:20px;backdrop-filter:blur(18px)}
+.stat b{display:block;font-size:23px;letter-spacing:-.05em}.stat span{font-size:11px;color:var(--muted)}
+.card{border:1px solid var(--line);background:var(--card);border-radius:24px;padding:18px;margin:12px 0;backdrop-filter:blur(20px);box-shadow:0 10px 40px rgba(0,0,0,.04)}
+.cardTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.cardTitle b{font-size:16px}.cardTitle span{font-size:12px;color:var(--muted)}
+.progressBar{height:9px;background:var(--ring);border-radius:99px;overflow:hidden}.progressBar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s}
+.nav{position:fixed;z-index:10;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:696px;margin:auto;height:66px;border:1px solid var(--line);background:var(--nav);backdrop-filter:blur(25px);border-radius:24px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 15px 50px rgba(0,0,0,.14)}
+.nav button{font-size:10px;color:var(--muted);font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.nav button.active{color:var(--text)}.nav svg{width:20px;height:20px}
+.sectionHead{padding:18px 2px 10px}.sectionHead h1{font-size:34px;letter-spacing:-.06em;margin:0}.sectionHead p{margin:6px 0;color:var(--muted);font-size:14px}
+.taskInput{display:flex;gap:8px}.taskInput input{flex:1;min-width:0;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:15px;padding:13px 14px;outline:none}.taskInput button{width:48px;border-radius:15px;background:var(--text);color:var(--bg);font-weight:800}
+.task{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.check{width:24px;height:24px;border:1.5px solid var(--muted);border-radius:8px;display:grid;place-items:center;flex:none}.task.done .check{background:var(--accent);border-color:var(--accent);color:white}.task.done .taskName{text-decoration:line-through;color:var(--muted)}.taskName{flex:1;font-size:14px;font-weight:650}.taskMeta{font-size:11px;color:var(--muted)}
+.empty{text-align:center;padding:24px;color:var(--muted);font-size:13px}
+.musicRow{display:flex;align-items:center;gap:12px;padding:12px 0}.album{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#6b5cff);display:grid;place-items:center;color:white;font-size:20px}.musicInfo{flex:1;min-width:0}.musicInfo b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.musicInfo span{color:var(--muted);font-size:11px}
+.settingsRow{display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid var(--line)}.settingsRow:last-child{border-bottom:0}.settingsRow b{font-size:14px}.settingsRow span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.switch{width:48px;height:29px;border-radius:99px;background:var(--ring);padding:3px}.switch i{display:block;width:23px;height:23px;background:var(--text);border-radius:50%;transition:.2s}.switch.on{background:var(--accent)}.switch.on i{transform:translateX(19px);background:white}
+select{background:var(--ring);color:var(--text);border:0;border-radius:11px;padding:8px 10px}
+.colorDots{display:flex;gap:8px}.colorDot{width:27px;height:27px;border-radius:50%;border:2px solid transparent}.colorDot.selected{border-color:var(--text)}
+.toast{position:fixed;z-index:30;left:50%;bottom:96px;transform:translate(-50%,12px);background:var(--text);color:var(--bg);padding:11px 15px;border-radius:13px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}.confetti i{position:absolute;width:8px;height:14px;top:-20px;animation:fall 1.8s ease-in forwards}@keyframes fall{to{transform:translate3d(var(--x),110vh,0) rotate(720deg);opacity:0}}
+.modal{position:fixed;z-index:40;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end}.modal.show{display:flex}.sheet{width:100%;max-width:720px;margin:auto 0 0;background:var(--bg);border-radius:28px 28px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:82vh;overflow:auto}.sheetHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.sheet h2{margin:0;font-size:22px}.close{width:38px;height:38px;border-radius:50%;background:var(--card);border:1px solid var(--line)}
+.install{display:none;margin-top:12px}.install.show{display:block}
+.smallBtn{padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:12px;font-weight:700}
+@media(min-width:650px){.app{padding-left:24px;padding-right:24px}.timerWrap{width:360px}}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="brand">Focus</div><div class="icons"><button class="install" id="install">Install</button><button class="icon" id="theme">☾</button><button class="icon" id="settings">⚙︎</button></div></header>
-<main class="hero">
-<div class="phase" id="phase">FOCUS · SESSION 1</div>
-<div class="clock" id="clock">25:00</div>
-<div class="progress"><i id="bar"></i></div>
-<button class="mainbtn" id="start">Start</button>
-<div class="sub"><button class="round" id="reset">↺</button><button class="round" id="skip">››</button></div>
-</main>
-<section class="cards">
-<div class="card"><div class="cardtitle">MUSIC</div><div class="song"><div class="art">♫</div><div class="songtext"><b id="song">No music selected</b><span id="state">Add songs from your iPhone</span></div><button class="play" id="play">▶</button></div><button class="smallbtn" id="library">Music library</button><input id="files" type="file" accept="audio/*" multiple hidden></div>
-<div class="card"><div class="cardtitle">TODAY</div><div class="stat" id="done">0</div><div class="muted">focus sessions</div></div>
-</section>
-<div class="bottom"><button id="widget">Widget view</button></div>
+  <header class="topbar">
+    <div class="brand">Focus<span>.</span></div>
+    <button class="iconbtn" id="settingsBtn" aria-label="Settings">⚙︎</button>
+  </header>
+
+  <main>
+    <section class="view active" id="home">
+      <div class="hero">
+        <div class="mode"><i class="dot"></i><span id="modeLabel">Focus</span></div>
+        <div class="timerWrap">
+          <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="track" cx="100" cy="100" r="86"/>
+            <circle class="progress" id="ring" cx="100" cy="100" r="86"/>
+          </svg>
+          <div>
+            <div class="timerText" id="timer">25:00</div>
+            <div class="timerSub" id="timerSub">Ready when you are.</div>
+          </div>
+        </div>
+        <div class="taskTitle" id="activeTaskTitle">Choose something to focus on</div>
+        <div class="taskHint" id="activeTaskHint">One session. One thing. No distractions.</div>
+        <div class="controls">
+          <button class="secondary" id="resetBtn" aria-label="Reset">↺</button>
+          <button class="primary" id="startBtn">Start Focus</button>
+          <button class="secondary" id="skipBtn" aria-label="Skip">»</button>
+        </div>
+        <div class="presets">
+          <button class="pill" data-preset="25">25 / 5</button>
+          <button class="pill" data-preset="50">50 / 10</button>
+          <button class="pill" data-preset="90">90 / 15</button>
+          <button class="pill" id="customBtn">Custom</button>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="stat"><b id="todaySessions">0</b><span>sessions today</span></div>
+        <div class="stat"><b id="todayMinutes">0</b><span>focus minutes</span></div>
+        <div class="stat"><b id="streak">0</b><span>day streak</span></div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Daily goal</b><span id="goalText">0 / 100 min</span></div>
+        <div class="progressBar"><i id="goalBar"></i></div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Now playing</b><button class="smallBtn" id="musicQuick">Music</button></div>
+        <div class="musicRow">
+          <div class="album">♪</div><div class="musicInfo"><b id="nowPlaying">No music selected</b><span id="nowPlayingSub">Add a song or use an ambient sound</span></div>
+          <button class="iconbtn" id="musicPlay">▶</button>
+        </div>
+      </div>
+      <div class="card install" id="installCard">
+        <div class="cardTitle"><b>Install Focus</b><span>One tap away</span></div>
+        <button class="primary" style="width:100%" id="installBtn">Add to Home Screen</button>
+      </div>
+    </section>
+
+    <section class="view" id="tasks">
+      <div class="sectionHead"><h1>Tasks</h1><p>Pick one thing. Make progress.</p></div>
+      <div class="card">
+        <div class="taskInput"><input id="taskInput" placeholder="What are you working on?" maxlength="80"><button id="addTask">+</button></div>
+        <div id="taskList"></div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Selected task</b><span id="selectedTaskMeta">None</span></div>
+        <button class="smallBtn" id="clearTask">Clear selection</button>
+      </div>
+    </section>
+
+    <section class="view" id="insights">
+      <div class="sectionHead"><h1>Insights</h1><p>Your consistency, at a glance.</p></div>
+      <div class="grid">
+        <div class="stat"><b id="weekMinutes">0</b><span>minutes this week</span></div>
+        <div class="stat"><b id="weekSessions">0</b><span>sessions this week</span></div>
+        <div class="stat"><b id="bestDay">—</b><span>best day</span></div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Last 7 days</b><span>focus minutes</span></div>
+        <div id="weekBars"></div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Focus rhythm</b><span id="rhythmText">Building your rhythm</span></div>
+        <p style="color:var(--muted);font-size:13px;line-height:1.55;margin:0">Short, repeatable sessions beat heroic bursts. Protect your start time, keep one task selected, and let the timer do the worrying.</p>
+      </div>
+    </section>
+
+    <section class="view" id="music">
+      <div class="sectionHead"><h1>Sound</h1><p>Make the room disappear.</p></div>
+      <div class="card">
+        <div class="cardTitle"><b>Ambient</b><span>built in</span></div>
+        <div class="presets" style="justify-content:flex-start">
+          <button class="pill" data-ambient="off">Off</button>
+          <button class="pill" data-ambient="rain">Rain</button>
+          <button class="pill" data-ambient="brown">Brown noise</button>
+          <button class="pill" data-ambient="ocean">Ocean</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Your music</b><button class="smallBtn" id="addMusic">Add audio</button></div>
+        <input id="musicFiles" type="file" accept="audio/*" multiple hidden>
+        <div id="musicList"></div>
+        <div class="empty" id="musicEmpty">Add MP3, M4A, WAV, or other audio files from your iPhone.</div>
+      </div>
+    </section>
+
+    <section class="view" id="settings">
+      <div class="sectionHead"><h1>Settings</h1><p>Make Focus fit you.</p></div>
+      <div class="card">
+        <div class="settingsRow"><div><b>Theme</b><span>Choose your look</span></div><select id="themeSelect"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+        <div class="settingsRow"><div><b>Accent</b><span>Personalize the timer</span></div><div class="colorDots" id="colors"></div></div>
+        <div class="settingsRow"><div><b>Auto-start breaks</b><span>Start the break automatically</span></div><button class="switch" id="autoBreak"><i></i></button></div>
+        <div class="settingsRow"><div><b>Auto-start focus</b><span>Start focus after a break</span></div><button class="switch" id="autoFocus"><i></i></button></div>
+        <div class="settingsRow"><div><b>Haptics</b><span>Small taps for timer events</span></div><button class="switch" id="haptics"><i></i></button></div>
+        <div class="settingsRow"><div><b>Daily goal</b><span>Minutes of focus</span></div><select id="goalSelect"><option>60</option><option>100</option><option>120</option><option>180</option><option>240</option></select></div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><b>Data</b><span>stored on this device</span></div>
+        <div class="presets" style="justify-content:flex-start">
+          <button class="pill" id="requestNotify">Enable notifications</button>
+          <button class="pill" id="clearData">Reset app data</button>
+        </div>
+      </div>
+      <div class="card"><div class="cardTitle"><b>About Focus</b><span>v2.0</span></div><p style="margin:0;color:var(--muted);font-size:13px;line-height:1.5">A private, distraction-free Pomodoro timer. Your tasks, settings, and session history stay on this device.</p></div>
+    </section>
+  </main>
 </div>
-<div class="widget"><div class="wcard"><div class="wtop"><b>Focus</b><span id="wphase">Focus</span></div><div class="wtime" id="wclock">25:00</div><div class="wbar"><i id="wbar"></i></div></div></div>
 
-<div class="modal" id="settingsModal"><div class="sheet"><h2>Settings</h2>
-<div class="row">Focus minutes <input id="focus" type="number" min="1" max="120" value="25"></div>
-<div class="row">Short break <input id="short" type="number" min="1" max="60" value="5"></div>
-<div class="row">Long break <input id="long" type="number" min="1" max="90" value="15"></div>
-<div class="row">Sessions before long break <input id="rounds" type="number" min="1" max="12" value="4"></div>
-<div class="row">Auto-start breaks <input id="autoBreak" type="checkbox" checked></div>
-<div class="row">Completion sound <input id="sound" type="checkbox" checked></div>
-<button class="close" data-close="settingsModal">Done</button></div></div>
+<nav class="nav">
+  <button class="active" data-nav="home">◷<span>Focus</span></button>
+  <button data-nav="tasks">✓<span>Tasks</span></button>
+  <button data-nav="insights">◒<span>Insights</span></button>
+  <button data-nav="music">♫<span>Sound</span></button>
+</nav>
 
-<div class="modal" id="libraryModal"><div class="sheet"><h2>Music library</h2><label class="smallbtn">＋ Add music<input id="files2" type="file" accept="audio/*" multiple hidden></label><div id="tracks"></div><button class="close" data-close="libraryModal">Done</button></div></div>
+<div class="toast" id="toast"></div><div class="confetti" id="confetti"></div>
 
-<audio id="audio"></audio>
+<div class="modal" id="customModal">
+  <div class="sheet">
+    <div class="sheetHead"><h2>Custom session</h2><button class="close" id="closeCustom">×</button></div>
+    <div class="settingsRow"><div><b>Focus minutes</b></div><input id="customFocus" type="number" min="1" max="180" value="25" style="width:90px;background:var(--ring);border:0;border-radius:10px;padding:10px;color:var(--text);text-align:center"></div>
+    <div class="settingsRow"><div><b>Break minutes</b></div><input id="customBreak" type="number" min="1" max="60" value="5" style="width:90px;background:var(--ring);border:0;border-radius:10px;padding:10px;color:var(--text);text-align:center"></div>
+    <button class="primary" style="width:100%;margin-top:14px" id="saveCustom">Use this session</button>
+  </div>
+</div>
+
 <script>
-const $=id=>document.getElementById(id);
-let cfg=JSON.parse(localStorage.getItem("focusCfg")||'{"focus":25,"short":5,"long":15,"rounds":4,"autoBreak":true,"sound":true}');
-let phase="Focus",cycle=1,left=cfg.focus*60,running=false,completed=+localStorage.getItem("completed")||0,timer=null,songs=[],current=-1,deferred=null;
-function total(){return (phase==="Focus"?cfg.focus:phase==="Short Break"?cfg.short:cfg.long)*60}
-function fmt(x){return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0")}
-function render(){let pct=Math.max(0,Math.min(100,(1-left/total())*100)),t=fmt(left);$("clock").textContent=t;$("bar").style.width=pct+"%";$("phase").textContent=phase.toUpperCase()+" · SESSION "+cycle;$("start").textContent=running?"Pause":"Start";$("done").textContent=completed;$("wclock").textContent=t;$("wbar").style.width=pct+"%";$("wphase").textContent=phase}
-function save(){localStorage.setItem("focusCfg",JSON.stringify(cfg));localStorage.setItem("completed",completed)}
-function tick(){if(left>0){left--;render()}else finish()}
-function finish(){running=false;clearInterval(timer);if(phase==="Focus"){completed++;phase=cycle>=cfg.rounds?"Long Break":"Short Break"}else{if(phase==="Long Break")cycle=1;else cycle++;phase="Focus"}left=total();save();beep();notify();if(phase!=="Focus"&&cfg.autoBreak) start();render()}
-function start(){running=true;clearInterval(timer);timer=setInterval(tick,1000);render()}
-$("start").onclick=()=>{running?(()=>{running=false;clearInterval(timer);render()})():start()};
-$("reset").onclick=()=>{running=false;clearInterval(timer);left=total();render()};
-$("skip").onclick=()=>{left=0;finish()};
-$("theme").onclick=()=>{document.documentElement.classList.toggle("dark");localStorage.setItem("dark",document.documentElement.classList.contains("dark"))};
-if(localStorage.getItem("dark")==="true")document.documentElement.classList.add("dark");
-$("settings").onclick=()=>{["focus","short","long"].forEach(k=>$(k).value=cfg[k]);$("rounds").value=cfg.rounds;$("autoBreak").checked=cfg.autoBreak;$("sound").checked=cfg.sound;$("settingsModal").classList.add("open")};
-document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>{let id=b.dataset.close;if(id==="settingsModal"){cfg.focus=+$("focus").value||25;cfg.short=+$("short").value||5;cfg.long=+$("long").value||15;cfg.rounds=+$("rounds").value||4;cfg.autoBreak=$("autoBreak").checked;cfg.sound=$("sound").checked;left=total();save();render()}$(id).classList.remove("open")});
-function addFiles(list){[...list].forEach(f=>songs.push({name:f.name,url:URL.createObjectURL(f)}));if(current<0&&songs.length)selectSong(0);renderTracks()}
-$("files").onchange=e=>addFiles(e.target.files);$("files2").onchange=e=>addFiles(e.target.files);
-$("library").onclick=()=>{renderTracks();$("libraryModal").classList.add("open")};
-function renderTracks(){let el=$("tracks");el.innerHTML=songs.length?"":"<p class='muted'>Your music library is empty.</p>";songs.forEach((s,i)=>{let d=document.createElement("div");d.className="track";d.innerHTML="<span>♫</span><span>"+s.name.replace(/[&<>]/g,"")+"</span><button>Play</button>";d.querySelector("button").onclick=()=>{selectSong(i);$("libraryModal").classList.remove("open");audio.play().catch(()=>{})};el.appendChild(d)})}
-function selectSong(i){current=i;$("audio").src=songs[i].url;$("song").textContent=songs[i].name;$("state").textContent="Ready to play"}
-const audio=$("audio");$("play").onclick=()=>{if(current<0){$("files").click();return}audio.paused?(audio.play(),$("play").textContent="Ⅱ",$("state").textContent="Playing"):(audio.pause(),$("play").textContent="▶",$("state").textContent="Paused")};audio.onended=()=>{if(songs.length){selectSong((current+1)%songs.length);audio.play().catch(()=>{})}};
-$("widget").onclick=()=>{document.body.classList.toggle("widgetMode");$("widget").textContent=document.body.classList.contains("widgetMode")?"Full screen":"Widget view"};
-function beep(){if(!cfg.sound)return;try{let c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.frequency.value=660;g.gain.setValueAtTime(.001,c.currentTime);g.gain.exponentialRampToValueAtTime(.12,c.currentTime+.03);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.45);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.5)}catch(e){}}
-function notify(){if("Notification"in window&&Notification.permission==="granted")new Notification("Focus", {body:phase==="Focus"?"Break finished. Ready to focus?":"Focus finished. Take a break."})}
-if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
-let installEvent;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installEvent=e;$("install").style.display="block"});$("install").onclick=async()=>{if(installEvent){installEvent.prompt();installEvent=null}};
-render();
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY="focus-ultimate-v2";
+const defaultState={mode:"focus",focusMin:25,breakMin:5,remaining:1500,running:false,endAt:null,sessions:[],tasks:[],selectedTask:null,goal:100,theme:"system",accent:"#ff4d5a",autoBreak:true,autoFocus:false,haptics:true,ambient:"off",musicId:null};
+let state={...defaultState,...JSON.parse(localStorage.getItem(KEY)||"{}")};
+let audio=null,ambientNode=null,wakeLock=null,deferredInstall=null;
+
+function save(){localStorage.setItem(KEY,JSON.stringify({...state,running:false,endAt:null}));}
+function dateKey(d=new Date()){return d.toISOString().slice(0,10)}
+function daySessions(key=dateKey()){return state.sessions.filter(x=>x.date===key)}
+function minutesToday(){return daySessions().reduce((a,x)=>a+x.minutes,0)}
+function sessionCountToday(){return daySessions().length}
+function streak(){
+  const days=new Set(state.sessions.map(x=>x.date)); let d=new Date(), n=0;
+  while(days.has(dateKey(d))){n++;d.setDate(d.getDate()-1)} return n;
+}
+function fmt(sec){sec=Math.max(0,Math.ceil(sec));return `${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`}
+function duration(){return (state.mode==="focus"?state.focusMin:state.breakMin)*60}
+function applyTheme(){
+  let t=state.theme;if(t==="system") t=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+  document.documentElement.dataset.theme=t; document.documentElement.style.setProperty("--accent",state.accent);
+}
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2200)}
+function buzz(ms=12){if(state.haptics&&navigator.vibrate) navigator.vibrate(ms)}
+function notify(title,body){
+  if("Notification" in window && Notification.permission==="granted") new Notification(title,{body});
+}
+function renderTimer(){
+  const total=duration(), rem=state.running?Math.max(0,(state.endAt-Date.now())/1000):state.remaining;
+  $("#timer").textContent=fmt(rem);
+  const p=1-rem/total, c=2*Math.PI*86; $("#ring").style.strokeDasharray=c;$("#ring").style.strokeDashoffset=c*(1-p);
+  $("#modeLabel").textContent=state.mode==="focus"?"Focus": "Break";
+  $("#startBtn").textContent=state.running?"Pause":(state.mode==="focus"?"Start Focus":"Start Break");
+  $("#timerSub").textContent=state.running?(state.mode==="focus"?"Deep work in progress":"Recharge time"):state.mode==="focus"?"Ready when you are.":"Take a breath.";
+  const task=state.tasks.find(t=>t.id===state.selectedTask);
+  $("#activeTaskTitle").textContent=task?task.name:(state.mode==="focus"?"Choose something to focus on":"Break time");
+  $("#activeTaskHint").textContent=task?(task.done?"Completed — nice work.":"One session. One thing. No distractions."):"One session. One thing. No distractions.";
+  updateStats();
+}
+function updateStats(){
+  const m=minutesToday(), s=sessionCountToday();$("#todayMinutes").textContent=m;$("#todaySessions").textContent=s;$("#streak").textContent=streak();
+  $("#goalText").textContent=`${m} / ${state.goal} min`;$("#goalBar").style.width=Math.min(100,m/state.goal*100)+"%";
+}
+function complete(){
+  state.remaining=0;state.running=false;state.endAt=null;
+  buzz([30,60,30]);notify(state.mode==="focus"?"Focus complete":"Break complete",state.mode==="focus"?"Great work. Time to recharge.":"Ready for another round?");
+  if(state.mode==="focus"){
+    const mins=state.focusMin;state.sessions.push({date:dateKey(),minutes:mins,taskId:state.selectedTask||null,at:Date.now()});
+    const t=state.tasks.find(t=>t.id===state.selectedTask);if(t)t.sessions=(t.sessions||0)+1;
+    confetti();toast("Session complete ✦");
+    state.mode="break";state.remaining=state.breakMin*60;
+    if(state.autoBreak) setTimeout(start,700);
+  }else{
+    state.mode="focus";state.remaining=state.focusMin*60;
+    if(state.autoFocus) setTimeout(start,700);
+  }
+  save();renderAll();
+}
+function tick(){
+  if(state.running){
+    const rem=(state.endAt-Date.now())/1000;
+    if(rem<=0){complete();return}
+    state.remaining=rem;renderTimer();
+  }
+}
+function start(){
+  if(state.running){state.remaining=Math.max(0,(state.endAt-Date.now())/1000);state.running=false;state.endAt=null;save();renderTimer();return}
+  state.endAt=Date.now()+state.remaining*1000;state.running=true;buzz();requestWakeLock();renderTimer();
+}
+function reset(){state.running=false;state.endAt=null;state.remaining=duration();save();renderTimer()}
+function skip(){state.running=false;state.endAt=null;if(state.mode==="focus"){state.mode="break";state.remaining=state.breakMin*60}else{state.mode="focus";state.remaining=state.focusMin*60}save();renderAll();toast("Skipped")}
+function setPreset(min){
+  state.focusMin=min;state.remaining=min*60;state.mode="focus";state.running=false;state.endAt=null;
+  state.breakMin=min===50?10:min===90?15:5;save();renderAll();toast(`${min} minute focus`)
+}
+async function requestWakeLock(){try{if("wakeLock"in navigator)wakeLock=await navigator.wakeLock.request("screen")}catch{}}
+function confetti(){
+  const c=$("#confetti");c.innerHTML="";
+  for(let i=0;i<32;i++){const e=document.createElement("i");e.style.left=(50+Math.random()*18-9)+"%";e.style.setProperty("--x",(Math.random()*180-90)+"vw");e.style.animationDelay=Math.random()*.35+"s";e.style.background=["#ff4d5a","#ffd166","#6b5cff","#35c98a","#4aa3ff"][i%5];c.appendChild(e)}
+  setTimeout(()=>c.innerHTML="",2200)
+}
+function addTask(){
+  const inp=$("#taskInput"),name=inp.value.trim();if(!name)return;
+  const t={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,done:false,sessions:0};state.tasks.unshift(t);state.selectedTask=t.id;inp.value="";save();renderAll();toast("Task selected");
+}
+function renderTasks(){
+  const box=$("#taskList");box.innerHTML="";
+  if(!state.tasks.length){box.innerHTML='<div class="empty">No tasks yet. Add the one thing you want to move forward.</div>';return}
+  state.tasks.forEach(t=>{
+    const e=document.createElement("div");e.className="task"+(t.done?" done":"");
+    e.innerHTML=`<button class="check">${t.done?"✓":""}</button><button class="taskName">${esc(t.name)}</button><span class="taskMeta">${t.sessions||0} sessions</span>`;
+    e.querySelector(".check").onclick=()=>{t.done=!t.done;save();renderAll()};
+    e.querySelector(".taskName").onclick=()=>{state.selectedTask=t.id;save();renderAll();showView("home")};
+    box.appendChild(e);
+  });
+  const t=state.tasks.find(x=>x.id===state.selectedTask);$("#selectedTaskMeta").textContent=t?t.name:"None";
+}
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function renderInsights(){
+  const now=new Date(), keys=[];for(let i=6;i>=0;i--){let d=new Date(now);d.setDate(d.getDate()-i);keys.push(dateKey(d))}
+  const vals=keys.map(k=>state.sessions.filter(x=>x.date===k).reduce((a,x)=>a+x.minutes,0));
+  $("#weekMinutes").textContent=vals.reduce((a,b)=>a+b,0);$("#weekSessions").textContent=keys.reduce((a,k)=>a+daySessions(k).length,0);
+  const max=Math.max(...vals,1), best=vals.indexOf(Math.max(...vals));$("#bestDay").textContent=vals[best]?["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(keys[best]+"T12:00:00").getDay()]:"—";
+  $("#weekBars").innerHTML=keys.map((k,i)=>`<div style="display:flex;align-items:center;gap:10px;margin:12px 0"><span style="width:28px;font-size:11px;color:var(--muted)">${["S","M","T","W","T","F","S"][new Date(k+"T12:00:00").getDay()]}</span><div class="progressBar" style="flex:1"><i style="width:${vals[i]/max*100}%"></i></div><span style="width:34px;text-align:right;font-size:11px;color:var(--muted)">${vals[i]}</span></div>`).join("");
+  $("#rhythmText").textContent=streak()>=3?"You're building momentum":"Start a few sessions to see your rhythm";
+}
+function renderMusic(){
+  $("#nowPlaying").textContent=state.musicId?state.musicId:"No music selected";
+  $("#nowPlayingSub").textContent=state.ambient!=="off"?`${state.ambient} ambience`:"Add a song or use an ambient sound";
+  loadMusicList();
+}
+let dbPromise;
+function db(){return dbPromise||(dbPromise=new Promise((res,rej)=>{const r=indexedDB.open("focus-music",1);r.onupgradeneeded=()=>r.result.createObjectStore("tracks",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}))}
+async function addFiles(files){
+  const d=await db();for(const f of files){await new Promise((res,rej)=>{const tx=d.transaction("tracks","readwrite");tx.objectStore("tracks").put({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),name:f.name,blob:f});tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}toast("Music added");loadMusicList()
+}
+async function tracks(){const d=await db();return new Promise((res,rej)=>{const r=d.transaction("tracks").objectStore("tracks").getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function loadMusicList(){
+  const list=$("#musicList"),all=await tracks();list.innerHTML="";
+  $("#musicEmpty").style.display=all.length?"none":"block";
+  all.forEach(t=>{const e=document.createElement("div");e.className="musicRow";e.innerHTML=`<div class="album">♫</div><div class="musicInfo"><b>${esc(t.name)}</b><span>Saved on this device</span></div><button class="smallBtn">Play</button><button class="smallBtn">×</button>`;
+    e.children[2].onclick=()=>playTrack(t);e.children[3].onclick=async()=>{const d=await db();d.transaction("tracks","readwrite").objectStore("tracks").delete(t.id);if(state.musicId===t.name)state.musicId=null;save();loadMusicList();renderMusic()};
+    list.appendChild(e)})
+}
+function playTrack(t){
+  if(audio){audio.pause();audio=null}
+  audio=new Audio(URL.createObjectURL(t.blob));audio.loop=true;audio.volume=.55;audio.play().catch(()=>{});state.musicId=t.name;save();renderMusic();toast("Playing "+t.name)
+}
+function toggleMusic(){if(audio){if(audio.paused)audio.play();else audio.pause()}else toast("Choose a song in Sound")}
+function ambient(type){
+  stopAmbient();state.ambient=type;save();renderMusic();
+  if(type==="off")return;
+  const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+  const ctx=new C(),buf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),data=buf.getChannelData(0);
+  let last=0;for(let i=0;i<data.length;i++){let w=Math.random()*2-1;if(type==="brown"){last=(last+.02*w);data[i]=last*3}else data[i]=w*(type==="ocean"?0.28:0.18)}
+  const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+  const filter=ctx.createBiquadFilter();filter.type=type==="ocean"?"lowpass":"lowpass";filter.frequency.value=type==="ocean"?700:type==="brown"?500:1500;
+  const gain=ctx.createGain();gain.gain.value=type==="ocean"?.08:type==="brown"?.12:.045;
+  src.connect(filter).connect(gain).connect(ctx.destination);src.start();ambientNode={ctx,src};toast(type==="rain"?"Rain ambience":type==="ocean"?"Ocean ambience":"Brown noise")
+}
+function stopAmbient(){if(ambientNode){try{ambientNode.src.stop();ambientNode.ctx.close()}catch{}ambientNode=null}}
+function renderSettings(){
+  $("#themeSelect").value=state.theme;$("#goalSelect").value=String(state.goal);
+  ["autoBreak","autoFocus","haptics"].forEach(id=>$("#"+id).classList.toggle("on",!!state[id]));
+  $("#colors").innerHTML=["#ff4d5a","#6b5cff","#1683ff","#19a974","#ff8a00","#e64fa0"].map(c=>`<button class="colorDot ${c===state.accent?"selected":""}" style="background:${c}" data-c="${c}"></button>`).join("");
+  $$("#colors .colorDot").forEach(b=>b.onclick=()=>{state.accent=b.dataset.c;save();applyTheme();renderSettings()})
+}
+function renderAll(){applyTheme();renderTimer();renderTasks();renderInsights();renderMusic();renderSettings()}
+function showView(id){$$(".view").forEach(v=>v.classList.toggle("active",v.id===id));$$(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.nav===id));window.scrollTo({top:0,behavior:"smooth"})}
+
+$("#startBtn").onclick=start;$("#resetBtn").onclick=reset;$("#skipBtn").onclick=skip;
+$$("[data-preset]").forEach(b=>b.onclick=()=>setPreset(+b.dataset.preset));
+$("#customBtn").onclick=()=>$("#customModal").classList.add("show");$("#closeCustom").onclick=()=>$("#customModal").classList.remove("show");
+$("#saveCustom").onclick=()=>{state.focusMin=Math.max(1,Math.min(180,+$("#customFocus").value||25));state.breakMin=Math.max(1,Math.min(60,+$("#customBreak").value||5));state.mode="focus";state.remaining=state.focusMin*60;state.running=false;state.endAt=null;save();$("#customModal").classList.remove("show");renderAll()};
+$("#addTask").onclick=addTask;$("#taskInput").onkeydown=e=>{if(e.key==="Enter")addTask()};$("#clearTask").onclick=()=>{state.selectedTask=null;save();renderAll()};
+$$("[data-nav]").forEach(b=>b.onclick=()=>showView(b.dataset.nav));
+$("#settingsBtn").onclick=()=>showView("settings");$("#musicQuick").onclick=()=>showView("music");$("#musicPlay").onclick=toggleMusic;
+$("#addMusic").onclick=()=>$("#musicFiles").click();$("#musicFiles").onchange=e=>addFiles(e.target.files);
+$$("[data-ambient]").forEach(b=>b.onclick=()=>ambient(b.dataset.ambient));
+$("#themeSelect").onchange=e=>{state.theme=e.target.value;save();applyTheme()};$("#goalSelect").onchange=e=>{state.goal=+e.target.value;save();renderAll()};
+["autoBreak","autoFocus","haptics"].forEach(id=>$("#"+id).onclick=()=>{state[id]=!state[id];save();renderSettings()});
+$("#requestNotify").onclick=async()=>{if("Notification"in window){const p=await Notification.requestPermission();toast(p==="granted"?"Notifications enabled":"Notifications not enabled")}else toast("Notifications aren't supported here")};
+$("#clearData").onclick=()=>{if(confirm("Reset Focus data on this device?")){localStorage.removeItem(KEY);location.reload()}};
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;$("#installCard").classList.add("show")});
+$("#installBtn").onclick=async()=>{if(deferredInstall){deferredInstall.prompt();deferredInstall=null}else toast("On iPhone: Share → Add to Home Screen")};
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&state.running)tick()});
+setInterval(tick,250);
+matchMedia("(prefers-color-scheme:dark)").addEventListener?.("change",applyTheme);
+state.remaining=state.running?state.remaining:duration();
+renderAll();
+</script>
+<script>
+if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 </script>
 </body>
 </html>

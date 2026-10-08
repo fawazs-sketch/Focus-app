@@ -1,3 +1,13 @@
 {
-"name":"Focus — Pomodoro","short_name":"Focus","start_url":"./","display":"standalone","background_color":"#f5f5f7","theme_color":"#f5f5f7","description":"A calm minimalist Pomodoro timer.","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "name":"Focus — Deep Work Timer",
+  "short_name":"Focus",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#09090b",
+  "theme_color":"#0b0b0d",
+  "description":"A private, beautiful Pomodoro timer for deep work.",
+  "icons":[
+    {"src":"icon-180.png","sizes":"180x180","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
 }
